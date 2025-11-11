@@ -43,27 +43,26 @@ const CarouselPreview: React.FC<CarouselPreviewProps> = ({
     
     // Populate hidden divs for export
     useEffect(() => {
-        slideRefs.current.forEach((ref, index) => {
-            if (ref) {
-                // We need to use ReactDOM to portal the content into the hidden divs
-                // to maintain context and styles, but for simplicity here we'll just
-                // re-render them. Note: For a more complex app, a portal approach would be better.
-                const ReactDOM = (window as any).ReactDOM;
-                if (ReactDOM && ReactDOM.createRoot) {
-                    const root = ReactDOM.createRoot(ref);
-                    root.render(
-                        <SlideContainer {...commonProps} slide={slides[index]} slideIndex={index} isForExport={true} />
-                    );
+        if (!isLoading && slides.length > 0) {
+            slideRefs.current.forEach((ref, index) => {
+                if (ref && slides[index]) {
+                    const ReactDOM = (window as any).ReactDOM;
+                    if (ReactDOM && ReactDOM.createRoot) {
+                        const root = ReactDOM.createRoot(ref);
+                        root.render(
+                            <SlideContainer {...commonProps} slide={slides[index]} slideIndex={index} isForExport={true} />
+                        );
+                    }
                 }
-            }
-        });
-    }, [slides, theme, template, logo, ctaText, ctaLink, instagramHandle, swipeText, backgroundImage, commonProps, slideRefs]);
+            });
+        }
+    }, [slides, theme, template, logo, ctaText, ctaLink, instagramHandle, swipeText, backgroundImage, commonProps, slideRefs, isLoading]);
 
 
     return (
         <div className="w-full space-y-8 rounded-lg">
             {isLoading ? (
-                <div className="w-full h-full bg-black/30 flex flex-col items-center justify-center rounded-2xl aspect-square">
+                <div className="w-full h-full bg-black/30 flex flex-col items-center justify-center rounded-2xl aspect-square shadow-2xl">
                      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-cyan-400"></div>
                      <p className="mt-4 text-lg">Η AI δημιουργεί...</p>
                 </div>

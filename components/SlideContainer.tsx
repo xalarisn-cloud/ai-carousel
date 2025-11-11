@@ -59,7 +59,7 @@ const SlideContainer: React.FC<SlideContainerProps> = (props) => {
             style={backgroundStyle}
         >
             {/* Blur + Gradient Overlay */}
-            <div className="absolute inset-0 w-full h-full backdrop-blur bg-gradient-to-b from-black/40 to-black/60 z-0"></div>
+            <div className="absolute inset-0 w-full h-full backdrop-blur-md bg-gradient-to-b from-black/40 to-black/60 z-0"></div>
             
             {/* Content must be on top of the overlay */}
             <div className="relative z-10 w-full h-full">
